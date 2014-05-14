@@ -1,0 +1,8 @@
+#!upstart
+description "Resque worker #{@n} #{@queue}"
+respawn
+
+start on starting resque
+stop on stopping resque
+
+exec su - deploy -c 'cd <%= @path %>/current; QUEUE=#{@queue} VERBOSE=1 bundle exec rake resque:work >> /var/log/resque/<%= @n %>.log 2>&1'
