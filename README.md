@@ -8,7 +8,7 @@ This is a very simple cookbook to deploy a pool of resque workers directly in Am
 
 In your custom layer, you must add this recipes to each stage
 
-**Configure**
+**Configure
 rails::configure
 opsworks-resque::configure
 

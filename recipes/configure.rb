@@ -7,8 +7,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
-@app_name = node[:deploy].keys.first
-@path = node[:deploy][@app_name][:deploy_to]
+@path = node[:resque][:path]
+
 
 template "/etc/init/resque.conf" do
   source "resque.conf.erb"
