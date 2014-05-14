@@ -7,15 +7,14 @@
 # All rights reserved - Do Not Redistribute
 #
 
-@path = node[:resque][:path]
-
-
 template "/etc/init/resque.conf" do
   source "resque.conf.erb"
   mode "0755"
 end
 
-node[:resque][:workers].each_with_index do |queue, index|
+node['resque']['workers'].each_with_index do |queue, index|
+  @queue = queue
+  @instance = index
   template "/etc/init/resque-#{index}.conf" do
     source "resque-n.conf.erb"
     mode "0755"

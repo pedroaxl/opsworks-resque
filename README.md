@@ -23,8 +23,11 @@ opsworks-resque::stop
 
 It expects an array with the queues of workers to run, for example
 ```ruby
-default[:resque][:workers] = ['*', '*', '*'] # 3 workers with queue *
-default[:resque][:workers] = ['imports', 'cache'] # 2 workers with queues imports and cache
+default['resque']['path'] = "/srv/www/mailee_staging/current"
+default['resque']['workers'] = ['*', '*', '*'] # 3 workers with queue *
+default['resque']['workers'] = ['imports', 'cache'] # 2 workers with queues imports and cache
+default['resque']['rails_env'] = "preproduction"
+
 ```
 
 # Recipes
