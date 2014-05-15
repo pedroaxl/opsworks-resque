@@ -13,8 +13,6 @@ end script
 
 exec su - deploy -c 'cd <%= node['resque-scheduler']['path'] %>; bundle exec resque-web -f -r $REDIS_SERVER -N <%= node['resque-scheduler']['rails_env'] %> -p 9051 config/initializers/resque-web.rb >> /var/log/resque/web.log 2>&1'
 
-
- bundle exec resque-web -f -r $REDIS_SERVER -N preproduction -p 9051 config/initializers/resque-web.rb
 start on runlevel [2345]
 
 stop on runlevel [016]
