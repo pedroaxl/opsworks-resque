@@ -19,8 +19,3 @@ node['resque']['workers'].each_with_index do |queue, index|
     variables queue: queue, instance: index
   end
 end
-
-service 'resque' do
-  action [:start]
-  provider Chef::Provider::Service::Upstart
-end
