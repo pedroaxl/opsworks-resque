@@ -12,10 +12,14 @@ template "/etc/init/resque.conf" do
   mode "0755"
 end
 
-node['resque']['workers'].each_with_index do |queue, index|
-  template "/etc/init/resque-#{index}.conf" do
-    source "resque-n.conf.erb"
-    mode "0755"
-    variables queue: queue, instance: index
+i = 1
+node['resque']['workers'].each do |queue, quantity|
+  quantity.times.do
+    template "/etc/init/resque-#{i}.conf" do
+      source "resque-n.conf.erb"
+      mode "0755"
+      variables queue: queue, instance: i
+    end
+    i+=1
   end
 end
