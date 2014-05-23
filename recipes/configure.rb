@@ -14,7 +14,7 @@ end
 
 i = 1
 node['resque']['workers'].each do |queue, quantity|
-  quantity.times.do
+  quantity.times do
     template "/etc/init/resque-#{i}.conf" do
       source "resque-n.conf.erb"
       mode "0755"
