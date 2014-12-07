@@ -8,33 +8,34 @@ This is a very simple cookbook to deploy a pool of resque workers directly in Am
 
 In your custom layer, you must add this recipes to each stage
 
-**Configure**
+**Setup**
 
-rails::configure
-opsworks-resque::configure
+opsworks-resque::setup
 
 **Deploy**
 
-deploy::rails
 opsworks-resque::restart
 
-**Shutdown**
+**Undeploy**
 
 opsworks-resque::stop
 
 # Attributes
 
 It expects an array with the queues of workers to run, for example
-```ruby
-default['resque']['path'] = "/srv/www/mailee_staging/current"
-default['resque']['workers'] = {"*" => 2, "images" => 1} # 2 workers for queue * and 1 worker for queue images
-default['resque']['rails_env'] = "production"
-
+```json
+"resque": {
+  "app-name": {
+    "workers": {
+      "*": 1
+    }
+  }
+}
 ```
 
 # Recipes
 
-**opsworks-resque::configure** - initial setup
+**opsworks-resque::setup** - initial setup
 **opsworks-resque::restart** - restart the workers (after deploy)
 **opsworks-resque::stop** - stop the workers (shutdown)
 
