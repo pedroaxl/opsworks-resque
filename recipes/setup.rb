@@ -9,7 +9,7 @@
 
 template "/etc/init/resque.conf" do
   source "resque.conf.erb"
-  mode "0755"
+  mode '0644'
 end
 
 node[:deploy].each do |application, deploy|
@@ -30,7 +30,7 @@ node[:deploy].each do |application, deploy|
       
       template "/etc/init/resque-#{application}-#{idx}.conf" do
         source "resque-n.conf.erb"
-        mode "0755"
+        mode '0644'
         variables env: env, application: application, deploy: deploy, queue: queue, instance: idx
       end
     end
