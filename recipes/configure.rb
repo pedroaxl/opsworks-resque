@@ -24,10 +24,10 @@ node[:deploy].each do |application, deploy|
       
       Chef::Log.info("Configuring resque for #{queue} with #{quantity} workers (idx #{idx})")
       
-      template "/etc/init/resque-#{idx}.conf" do
+      template "/etc/init/resque-#{application}-#{idx}.conf" do
         source "resque-n.conf.erb"
         mode "0755"
-        variables deploy: deploy, queue: queue, instance: idx
+        variables application: application, deploy: deploy, queue: queue, instance: idx
       end
     end
   end
