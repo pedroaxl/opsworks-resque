@@ -7,14 +7,15 @@
 # All rights reserved - Do Not Redistribute
 #
 
-template "/etc/init/resque.conf" do
-  source "resque.conf.erb"
-  mode '0644'
-end
-
 node[:deploy].each do |application, deploy|
 
   Chef::Log.info("Configuring resque for application #{application}")
+
+  template "/etc/init/resque-#{application}.conf" do
+    source "resque.conf.erb"
+    mode '0644'
+    variables deploy: deploy
+  end
 
   settings = node[:resque][application]
   # configure rails_env in case of non-rails app
@@ -23,9 +24,6 @@ node[:deploy].each do |application, deploy|
 
     quantity.times do |idx|
       idx = idx + 1 # make index 1-based
-      
-      Chef::Log.info("Configuring resque for #{queue} with #{quantity} workers (idx #{idx})")
-      
       template "/etc/init/resque-#{application}-#{idx}.conf" do
         source "resque-n.conf.erb"
         mode '0644'

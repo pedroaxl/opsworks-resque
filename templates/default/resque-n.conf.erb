@@ -1,8 +1,8 @@
 #!upstart
 description "Resque worker <%= @instance %> <%= @queue %>"
 respawn
-start on starting resque
-stop on stopping resque
+start on starting resque-<%= @application %>
+stop on stopping resque-<%= @application %>
 
 env QUEUE=<%= @queue %>
 env RAILS_ENV=<%= @deploy[:rails_env] %>
