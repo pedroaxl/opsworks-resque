@@ -16,7 +16,7 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("Configuring resque for application #{application}")
 
-  env = (deploy[:environment] || {}).map{|k,v| "#{k}=#{v}"}.join(' ')
+  env = (deploy[:environment] || {}).map{|k,v| "#{k}='#{v}'"}.join(' ')
 
   settings = node[:resque][application]
   # configure rails_env in case of non-rails app
