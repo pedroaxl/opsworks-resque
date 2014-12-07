@@ -16,6 +16,8 @@ node[:deploy].each do |application, deploy|
 
   Chef::Log.info("Configuring resque for application #{application}")
 
+  env = (deploy[:environment] || {}).map{|k,v| "#{k}=#{v}"}.join(' ')
+
   settings = node[:resque][application]
   # configure rails_env in case of non-rails app
   deploy[:rails_env] ||= settings[:rails_env]
@@ -29,7 +31,7 @@ node[:deploy].each do |application, deploy|
       template "/etc/init/resque-#{application}-#{idx}.conf" do
         source "resque-n.conf.erb"
         mode "0755"
-        variables application: application, deploy: deploy, queue: queue, instance: idx
+        variables env: env, application: application, deploy: deploy, queue: queue, instance: idx
       end
     end
   end

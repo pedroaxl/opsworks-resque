@@ -5,4 +5,4 @@ respawn
 start on starting resque
 stop on stopping resque
 
-exec su - deploy -c 'cd <%= @deploy[:deploy_to] %>/current/; QUEUE=<%= @queue %> VERBOSE=1 RAILS_ENV=<%= @deploy[:rails_env] %> bundle exec rake resque:work >> /var/log/resque/<%= @application %>-<%= @instance %>.log 2>&1'
+exec su - deploy -c 'cd <%= @deploy[:deploy_to] %>/current/; QUEUE=<%= @queue %> VERBOSE=1 RAILS_ENV=<%= @deploy[:rails_env] %> <%= @env %> bundle exec rake resque:work >> /var/log/resque/<%= @application %>-<%= @instance %>.log 2>&1'
