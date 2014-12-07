@@ -12,14 +12,23 @@ template "/etc/init/resque.conf" do
   mode "0755"
 end
 
-i = 1
-node['resque']['workers'].each do |queue, quantity|
-  quantity.times do
-    template "/etc/init/resque-#{i}.conf" do
-      source "resque-n.conf.erb"
-      mode "0755"
-      variables queue: queue, instance: i
+node[:deploy].each do |application, deploy|
+
+  Chef::Log.info("Configuring resque for application #{application}")
+
+  settings = node[:resque][application]
+  settings[:workers].each do |queue, quantity|
+
+    quantity.times do |idx|
+      idx = idx + 1 # make index 1-based
+      
+      Chef::Log.info("Configuring resque for #{queue} with #{quantity} workers (idx #{idx})")
+      
+      template "/etc/init/resque-#{idx}.conf" do
+        source "resque-n.conf.erb"
+        mode "0755"
+        variables deploy: deploy, queue: queue, instance: idx
+      end
     end
-    i+=1
   end
 end
