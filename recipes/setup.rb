@@ -17,6 +17,8 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("Configuring resque for application #{application}")
 
   settings = node[:resque][application]
+  # configure rails_env in case of non-rails app
+  deploy[:rails_env] ||= settings[:rails_env]
   settings[:workers].each do |queue, quantity|
 
     quantity.times do |idx|
