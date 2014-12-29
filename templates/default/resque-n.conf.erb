@@ -5,7 +5,7 @@ start on starting resque-<%= @application %>
 stop on stopping resque-<%= @application %>
 
 env QUEUE=<%= @queue %>
-env RAILS_ENV=<%= @deploy[:rails_env] %>
+env RACK_ENV=<%= @rack_env %>
 env TERM_CHILD=1
 
 chdir <%= @deploy[:deploy_to] %>/current
