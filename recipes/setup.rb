@@ -20,10 +20,11 @@ node[:deploy].each do |application, deploy|
   settings = node[:resque][application]
   # configure rails_env in case of non-rails app
   rack_env = deploy[:rails_env] || settings[:rack_env] || settings[:rails_env]
+  idx = 0
   settings[:workers].each do |queue, quantity|
 
-    quantity.times do |idx|
-      idx = idx + 1 # make index 1-based
+    quantity.times do
+      idx += 1 # make index 1-based
       template "/etc/init/resque-#{application}-#{idx}.conf" do
         source "resque-n.conf.erb"
         mode '0644'
